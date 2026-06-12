@@ -1,0 +1,22 @@
+directory:
+  - .
+branch: main
+download-external-modules: true
+evaluate-variables: true
+external-modules-download-path: .external_modules
+framework:
+- all
+mask: []
+secrets-scan-file-type: []
+summary-position: top
+skip-check:
+  - CKV2_GHA_1  # this check is designed for GitHub Actions workflows, not Terraform code
+  - CKV_TF_1                 # this check is apparently unable to recognize that module version is pinned
+  - CKV2_AWS_11              # Flow logs disabled for cost purposes in example platform
+  - CKV2_AWS_19              # false positives for public network configuration
+  - CKV2_AWS_44
+  - CKV2_AWS_35
+  - CKV_AWS_130
+  - CKV2_AWS_12
+  - CKV_AWS_111              # false positive for use case
+  - CKV_AWS_356

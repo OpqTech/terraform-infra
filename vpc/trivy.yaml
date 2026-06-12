@@ -1,0 +1,9 @@
+scan:
+    skip-dirs:
+      - .terraform/
+      - .external_modules/
+      - .vscode/
+
+misconfiguration:
+    terraform:
+        exclude-downloaded-modules: true

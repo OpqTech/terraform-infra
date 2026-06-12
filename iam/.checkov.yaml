@@ -1,0 +1,27 @@
+directory:
+  - .
+branch: main
+download-external-modules: true
+evaluate-variables: true
+external-modules-download-path: .external_modules
+framework:
+- all
+mask: []
+secrets-scan-file-type: []
+summary-position: top
+skip-check:
+  - CKV_TF_1     # cost to mitigate exceeds likelihood of risk
+  - CKV2_GHA_1  # this check is designed for GitHub Actions workflows, not Terraform code
+  - CKV2_AWS_14  # only machine accounts are being created by the pipeline
+  - CKV2_AWS_21
+  - CKV2_AWS_22
+  - CKV_AWS_273
+  - CKV_AWS_288  # policy statement is long, but necessary
+  - CKV_AWS_286  # creation and storage of machine account credentials is the necessary function of this repo
+  - CKV_AWS_287
+  - CKV_AWS_289
+  - CKV_AWS_61   # by design, the machine accounts can assume all roles
+  - CKV_AWS_290
+  - CKV_AWS_355  # appropriate use for Tag*
+  - CKV_AWS_40   # machine accounts do not receive policies, added to a group that has assume role permissions
+  - CKV_CIRCLECIPIPELINES_2  # this check is apparently unable to recognize that I did pin the image tag

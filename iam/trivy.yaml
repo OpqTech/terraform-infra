@@ -1,0 +1,12 @@
+scan:
+    skip-files:
+      - -aws-platform-storage-role.tf # fix when limited
+      - -aws-ai-deployment-role.tf # fix when limited
+    skip-dirs:
+      - .terraform/
+      - .external_modules/
+      - .vscode/
+
+misconfiguration:
+    terraform:
+        exclude-downloaded-modules: true

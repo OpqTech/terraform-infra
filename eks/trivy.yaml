@@ -1,0 +1,9 @@
+misconfiguration:
+    terraform:
+        exclude-downloaded-modules: true
+scan:
+  skip-dirs:
+    - .external_modules
+    - .terraform
+    - test
+    - tpl
