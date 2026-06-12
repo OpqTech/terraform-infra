@@ -14,18 +14,6 @@ module "eks" {
     support_type = "STANDARD"
   }
 
-  access_entries = {
-    Administrators = {
-      principal_arn = "arn:aws:iam::${var.aws_account_id}:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AdministratorAccess_540504b3a3e11ffa"
-      policy_associations = {
-        adminAccess = {
-          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-          access_scope = {
-            type = "cluster"
-          }
-        }
-      }
-    }
 
     GithubDeployer = {
       principal_arn = "arn:aws:iam::${var.aws_account_id}:role/Roles/GHAppDeployerRole"
