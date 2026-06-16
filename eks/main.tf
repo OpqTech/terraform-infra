@@ -14,6 +14,18 @@ module "eks" {
     support_type = "STANDARD"
   }
 
+  access_entries = {
+    # Administrators = {
+    #   principal_arn = "arn:aws:iam::${var.aws_account_id}:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AdministratorAccess_540504b3a3e11ffa"
+    #   policy_associations = {
+    #     adminAccess = {
+    #       policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+    #       access_scope = {
+    #         type = "cluster"
+    #       }
+    #     }
+    #   }
+    # }
 
     GithubDeployer = {
       principal_arn = "arn:aws:iam::${var.aws_account_id}:role/Roles/GHAppDeployerRole"
@@ -39,37 +51,43 @@ module "eks" {
 
   addons = {
     coredns = {
-      addon_version  = "v1.14.3-eksbuild.2"
-      before_compute = true
+      addon_version               = var.addon_coredns_version
+      before_compute              = true
+      resolve_conflicts_on_update = "OVERWRITE"
     }
 
     eks-pod-identity-agent = {
-      addon_version  = "v1.3.10-eksbuild.3"
-      before_compute = true
+      addon_version               = var.addon_eks_pod_identity_agent_version
+      before_compute              = true
+      resolve_conflicts_on_update = "OVERWRITE"
     }
 
     kube-proxy = {
-      addon_version  = "v1.35.3-eksbuild.11"
-      before_compute = true
+      addon_version               = var.addon_kube_proxy_version
+      before_compute              = true
+      resolve_conflicts_on_update = "OVERWRITE"
     }
 
     vpc-cni = {
-      addon_version  = "v1.22.1-eksbuild.2"
-      before_compute = true
+      addon_version               = var.addon_vpc_cni_version
+      before_compute              = true
+      resolve_conflicts_on_update = "OVERWRITE"
     }
   }
 
   eks_managed_node_groups = {
     # dedicated mgmt node group, other node groups managed by karpenter
     (var.node_group_name) = {
-      ami_type       = var.node_group_ami_type
-      instance_types = var.node_group_instance_types
-      capacity_type  = var.node_group_capacity_type
-      min_size       = var.node_group_min_size
-      max_size       = var.node_group_max_size
-      desired_size   = var.node_group_desired_size
-      disk_size      = var.node_group_disk_size
-      subnet_ids     = data.aws_subnets.cluster_private_subnets.ids
+      ami_type             = var.node_group_ami_type
+      instance_types       = var.node_group_instance_types
+      capacity_type        = var.node_group_capacity_type
+      min_size             = var.node_group_min_size
+      max_size             = var.node_group_max_size
+      desired_size         = var.node_group_desired_size
+      disk_size            = var.node_group_disk_size
+      subnet_ids           = data.aws_subnets.cluster_private_subnets.ids
+      force_update_version = true
+
       metadata_options = {
         http_endpoint               = "enabled"
         http_tokens                 = "required"

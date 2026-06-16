@@ -14,7 +14,7 @@ module "eks_addons" {
 
   eks_addons = {
     aws-ebs-csi-driver = {
-      addon_version = "v1.61.1-eksbuild.1"
+      addon_version = var.addon_ebs_csi_driver_version
     }
   }
 }

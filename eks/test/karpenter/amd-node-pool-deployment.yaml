@@ -17,7 +17,7 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
         karpenter.sh/nodepool: amd-node-pool
-      tolerations:
+      tolerations: 
         - key: dedicated
           operator: Equal
           value: karpenter

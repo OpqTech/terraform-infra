@@ -261,6 +261,17 @@ resource "aws_iam_policy" "ControlPlaneBaseRolePolicy" {
         "Effect" : "Allow"
         "Resource" : "*"
       },
+      {
+        "Sid" : "VeleroBackupBucketAccess"
+        "Action" : [
+          "s3:*"
+        ]
+        "Effect" : "Allow"
+        "Resource" : [
+          "arn:aws:s3:::*-velero-backups-${var.aws_account_id}",
+          "arn:aws:s3:::*-velero-backups-${var.aws_account_id}/*"
+        ]
+      },
     ]
   })
 }
